@@ -1,0 +1,20 @@
+definition_version: 2
+entities:
+   kurve_app_pkg:
+      type: application package
+      manifest: app/manifest.yml
+      artifacts:
+         - src: app/*
+           dest: ./
+         #- app/service_spec.yaml
+      meta:
+         role: kurve_role
+         warehouse: kurve_warehouse
+   kurve_app:
+      type: application
+      from:
+         target: kurve_app_pkg
+      debug: false
+      meta:
+         role: kurve_role
+         warehouse: kurve_warehouse

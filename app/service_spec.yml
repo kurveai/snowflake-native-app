@@ -1,0 +1,16 @@
+spec:
+  containers:
+    - name: kurve
+      # Reference the same full image path as in manifest.yml
+      image: /kurve/data_schema/kurve_app:latest # Use the correct Snowflake image path
+      env:
+        PORT: 7777
+        SERVER_PORT: 7777
+        DATABASE_URL: sqlite:////runtime/app/app.db
+      #readinessProbe:
+      #  port: 7777
+      #  path: /demo/data
+  endpoints:
+    - name: index-endpoint
+      port: 7777
+      public: true
