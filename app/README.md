@@ -48,8 +48,10 @@ CALL <application_name>.kurve_core.service_endpoint();
 ```
 
 ## Add more data sources
+```sql
 grant usage on <database> to application <application_name>;
 grant usage on <database.schema> to application <application_name>;
 grant select on <database.schema.table> to application <application_name>;
+```
 
 Check out the docs here: [https://kurveai.github.io/kurvedocs/](https://kurveai.github.io/kurvedocs/)
