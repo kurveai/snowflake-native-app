@@ -1,10 +1,10 @@
 manifest_version: 2
-
+#name: KURVE_APP
 
 version:
   name: 'V1'             # Logical name for the version (required)
-  patch: 0               # Default patch number (required)
-  label: '0.1.0'         # Display name for consumers (optional, but recommended)
+  patch: 10               # Default patch number (required)
+  label: '0.1.6'         # Display name for consumers (optional, but recommended)
   comment: 'Kurve initial release' # Internal comment (optional)
 
 artifacts:

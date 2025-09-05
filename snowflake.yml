@@ -1,6 +1,7 @@
 definition_version: 2
 entities:
    kurve_app_pkg:
+   #kurve_internal_pkg:
       type: application package
       manifest: app/manifest.yml
       artifacts:
@@ -13,6 +14,7 @@ entities:
    kurve_app:
       type: application
       from:
+         #target: kurve_internal_pkg
          target: kurve_app_pkg
       debug: false
       meta:

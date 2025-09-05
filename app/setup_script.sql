@@ -11,20 +11,17 @@ GRANT USAGE ON SCHEMA kurve_core TO APPLICATION ROLE kurve_app_role;
 --GRANT SELECT, INSERT, UPDATE, DELETE ON FUTURE TABLES IN SCHEMA kurve_output TO APPLICATION ROLE kurve_app_role;
 
 -- taking this outside of the stored procedure
-LET pool_name VARCHAR := 'KURVE_COMPUTE_POOL';
+--LET pool_name VARCHAR := 'KURVE_COMPUTE_POOL';
 
-CREATE COMPUTE POOL IF NOT EXISTS IDENTIFIER(:pool_name)
+CREATE COMPUTE POOL IF NOT EXISTS KURVE_COMPUTE_POOL --IDENTIFIER('KURVE_COMPUTE_POOL')
       MIN_NODES = 1
       MAX_NODES = 1
       INSTANCE_FAMILY = CPU_X64_M
       AUTO_RESUME = true;
 
 
---CREATE OR REPLACE WAREHOUSE kurve_warehouse WITH
---  WAREHOUSE_SIZE='X-SMALL';
-
 CREATE SERVICE IF NOT EXISTS kurve_core.kurve_service
-      IN COMPUTE POOL identifier(:pool_name)
+      IN COMPUTE POOL KURVE_COMPUTE_POOL --identifier('KURVE_COMPUTE_POOL')
       FROM spec='service_spec.yml';
 
 -- could this be the required statement?
@@ -34,37 +31,6 @@ GRANT USAGE ON SERVICE kurve_core.kurve_service TO APPLICATION ROLE kurve_app_ro
 GRANT SERVICE ROLE KURVE_CORE.KURVE_SERVICE!all_endpoints_usage TO APPLICATION ROLE kurve_app_role;
 
 --GRANT USAGE ON WAREHOUSE my_app_wh TO APPLICATION ROLE my_app.app_user_role;
-
-
-
-CREATE OR REPLACE PROCEDURE kurve_core.start_app()
-   RETURNS string
-   LANGUAGE sql
-   AS
-$$
-BEGIN
-   -- account-level compute pool object prefixed with app name to prevent clashes
-   --LET pool_name := (SELECT CURRENT_DATABASE()) || '_compute_pool';
-   LET pool_name VARCHAR := 'KURVE_COMPUTE_POOL';
-
-   CREATE COMPUTE POOL IF NOT EXISTS IDENTIFIER(:pool_name)
-      MIN_NODES = 1
-      MAX_NODES = 1
-      INSTANCE_FAMILY = CPU_X64_M
-      AUTO_RESUME = true;
-
-   CREATE SERVICE IF NOT EXISTS kurve_core.kurve_service
-      IN COMPUTE POOL identifier(:pool_name)
-      FROM spec='service_spec.yml';
-
-   -- could this be the required statement?
-   GRANT USAGE ON SERVICE kurve_core.kurve_service TO APPLICATION ROLE kurve_app_role;
-
-   RETURN 'Service successfully created';
-END;
-$$;
-
-GRANT USAGE ON PROCEDURE kurve_core.start_app() TO APPLICATION ROLE kurve_app_role;
 
 CREATE OR REPLACE PROCEDURE kurve_core.service_status()
 RETURNS TABLE ()
