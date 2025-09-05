@@ -1,7 +1,7 @@
 # Kurve Snowflake Native Container App
 Kurve automates extraction of primary keys, foreign keys, date keys and other critical relational metadata and constructs a visual metadata graph.  Kurve then allows for multi-table data preparation for analytics and AI workloads by leveraging the metadata graphs it builds.
 
-Post-installation instructions:
+## Post-installation instructions:
 ```sql
 -- Create a database for Kurve to write to or use an existing one
 --CREATE DATABASE IF NOT EXISTS MY_OUTPUT_DB;
@@ -38,7 +38,7 @@ GRANT USAGE ON WAREHOUSE KURVE_WAREHOUSE TO APPLICATION <application_name>;
 GRANT IMPORTED PRIVILEGES ON DATABASE SNOWFLAKE_SAMPLE_DATA TO APPLICATION <application_name>;
 ```
 
-# Check the status of the application after installation
+## Check the status of the application after installation
 ```sql
 -- check the status first and when it is READY get the endpoint
 CALL <application_name>.kurve_core.service_status();
@@ -47,7 +47,7 @@ CALL <application_name>.kurve_core.service_status();
 CALL <application_name>.kurve_core.service_endpoint();
 ```
 
-# Add more data sources
+## Add more data sources
 grant usage on <database> to application <application_name>;
 grant usage on <database.schema> to application <application_name>;
 grant select on <database.schema.table> to application <application_name>;
